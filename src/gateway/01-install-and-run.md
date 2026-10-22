@@ -30,16 +30,16 @@ runvil-gateway --version
 
 Installing the gateway runs `runvil-gateway init`, which writes the default config described below when none exists and, with Speech to Text checked, downloads the speech runtime and the speech models the selected profile lists. When that step fails, for example without a network, the Windows setup keeps the gateway installed and says so; on macOS and Linux, choose Ignore to keep the installation, since Cancel removes it. Then run the command the error names, `runvil-gateway init` or `runvil-gateway init --no-stt`, yourself to retry. `init --no-stt` writes the config without downloading anything; `init` with speech refuses a config whose selected profile lists no `[[stt_model]]`, and names the selection and how to fix it.
 
-Your config, keys, logs, and downloaded models live in the `.runvil` directory of your user profile, not in the install directory, so uninstalling keeps them, unless you tick Delete app data in the Windows uninstaller. On Windows, rerun the setup to add components; its components page starts from your previous choice. To remove one, uninstall from Settings, Apps, then run the setup again with the components you want. On macOS and Linux, the installer refuses a folder that already holds an installation: run `maintenancetool` in the install directory to uninstall, then run the installer again with the components you want. Checking Speech to Text in a later install does not add speech by itself: the installer keeps your existing config, and `init` stops when the selected profile lists no speech model. Add the models first, as the speech chapter describes.
+Your config, keys, logs, and downloaded models live in the `.runvil` directory of your user profile, not in the install directory, so uninstalling keeps them, unless you tick Delete app data in the Windows uninstaller. On Windows, rerun the setup to add components; its components page starts from your previous choice. To remove one, uninstall from Settings, Apps, then run the setup again with the components you want. On macOS and Linux, the installer refuses a folder that already holds an installation: run `maintenancetool` (`maintenancetool.app` on macOS) in the install directory to uninstall, then run the installer again with the components you want. Checking Speech to Text in a later install does not add speech by itself: the installer keeps your existing config, and `init` stops when the selected profile lists no speech model. Add the models first, as the speech chapter describes.
 
-On a server, build the gateway from a source checkout instead. Install the Settings page's dependencies, then build:
+On a server, build the gateway from a source checkout instead. With Rust and Node 22 installed, install the Settings page's dependencies, then build:
 
 ````
 npm ci --prefix crates/gateway/config-ui/ui
 cargo build --locked --release -p gateway
 ````
 
-The program lands in `target/release/runvil-gateway`.
+The program lands in `target/release/runvil-gateway`; copy it to `/usr/local/bin` for the sample service below.
 
 ## Start the gateway
 
