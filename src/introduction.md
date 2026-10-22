@@ -28,5 +28,7 @@ Each audience has one documentation set.
 
 If you operate the gateway, read [the Gateway set](gateway/index.md). It teaches installation, the configuration file, remote and local models, speech-to-text, profiles, and the operational surface.
 
+If you use the Workshop, read [the Workshop set](workshop/index.md). It covers installing Runvil and keeping it up to date.
+
 If you write prompts, read [the Prompt Language set](language/index.md). It teaches the .md prompt language in full: what a prompt is, file structure, blocks and prose, how a prompt runs, the Lua environment, arguments, substitution, jump and call, the store, models, conversations, tools, web fetch and search, fanout, tasks, and limits and errors, with a quick reference at the end.
 
