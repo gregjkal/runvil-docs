@@ -12,19 +12,25 @@ Each platform installs in its own place:
 
 - Windows: `%LOCALAPPDATA%\Runvil\runvil-gateway.exe`. A Gateway-only install's last page offers to open the Settings page in your browser. The Start menu entry belongs to Workshop, so start the gateway later by running `runvil-gateway.exe`, or turn on Launch at Login from its tray menu.
 - macOS: `Runvil Gateway.app` in `/Applications/Runvil`. The installer never asks for an administrator password; if you cannot write `/Applications`, choose a folder you can, such as `~/Applications/Runvil`.
-- Linux: `runvil-gateway` in `~/Runvil`, with a "Runvil Gateway Settings" entry in your applications menu. The x64 installer runs on Ubuntu 22.04 or later and the ARM64 installer on Ubuntu 24.04, Debian 13, or later, from a desktop session. A minimal or server system may lack libraries every desktop has, such as EGL, GLES, OpenGL, HarfBuzz, FriBidi, fontconfig, and the Wayland client library.
+- Linux: `runvil-gateway` in `~/Runvil`, with a "Runvil Gateway Settings" entry in your applications menu. The x64 installer runs on Ubuntu 22.04 or later and the ARM64 installer on Ubuntu 24.04, Debian 13, or later, from a desktop session. A minimal or server system may lack libraries every desktop has, such as EGL, GLES, OpenGL, HarfBuzz, FriBidi, fontconfig, the Wayland client library, and the X11 (xcb) libraries the installer itself uses.
 
 The installers are not code-signed yet. On Windows, SmartScreen may stop the setup: choose More info, then Run anyway. On macOS the first open is refused: open System Settings, then Privacy & Security, choose Open Anyway, and open the installer again. Until the apps are signed, Launch at Login does not work on macOS.
 
-Installing the gateway runs `runvil-gateway init`, which writes the default config described below when none exists and, with Speech to Text checked, downloads the speech runtime and every speech model the config declares. When that step fails, for example without a network, the gateway stays installed, and running the same command again from the install directory retries it. `init --no-stt` writes the config without downloading anything; `init` with speech refuses a config whose selected profile declares no `[[stt_model]]`, and names the profile.
+The installers do not put the gateway on your `PATH`, so run it by its full path. In the default install folder that is:
 
-Confirm the install by printing the version:
+- Windows, in PowerShell: `& "$env:LOCALAPPDATA\Runvil\runvil-gateway.exe"`
+- macOS: `"/Applications/Runvil/Runvil Gateway.app/Contents/MacOS/runvil-gateway"`
+- Linux: `~/Runvil/runvil-gateway`
+
+The commands in this guide write that path as `runvil-gateway`. Confirm the install by printing the version:
 
 ````
 runvil-gateway --version
 ````
 
-Your config, keys, logs, and downloaded models live in the `.runvil` directory of your user profile, not in the install directory, so uninstalling keeps them. On Windows, rerun the setup to change components; its components page starts from your previous choice. On macOS and Linux, the installer refuses a folder that already holds an installation: run `maintenancetool` in the install directory to uninstall, then run the installer again with the components you want.
+Installing the gateway runs `runvil-gateway init`, which writes the default config described below when none exists and, with Speech to Text checked, downloads the speech runtime and the speech models the selected profile lists. When that step fails, for example without a network, the Windows setup keeps the gateway installed and says so; on macOS and Linux, choose Ignore to keep the installation, since Cancel removes it. Then run `runvil-gateway init` yourself to retry. `init --no-stt` writes the config without downloading anything; `init` with speech refuses a config whose selected profile lists no `[[stt_model]]`, and names the profile.
+
+Your config, keys, logs, and downloaded models live in the `.runvil` directory of your user profile, not in the install directory, so uninstalling keeps them, unless you tick Delete app data in the Windows uninstaller. On Windows, rerun the setup to change components; its components page starts from your previous choice. On macOS and Linux, the installer refuses a folder that already holds an installation: run `maintenancetool` in the install directory to uninstall, then run the installer again with the components you want.
 
 On a server, build the gateway from a source checkout instead. Install the Settings page's dependencies, then build:
 
@@ -63,13 +69,13 @@ After every successful bind the gateway writes a gateway discovery file (`gatewa
 
 An installed gateway updates itself from the same signed release channel Workshop uses, and only ever to a newer version whose signature checks out against the release key built into it.
 
-A gateway in the tray checks for an update when it starts and then every day, an hour later when a check fails. When a newer version exists, the status line and the update item read "Update available" with the version. It never installs on its own, because a restart drops loaded models and requests in flight: choose the update item to install it. The item reads "Check for Updates" before a check finds anything and "Up to date" with the version after one finds nothing; choosing either checks again and installs whatever it finds. While an update downloads, the status line shows its progress, and a failed check or update shows "Update failed" with the reason.
+A gateway in the tray checks for an update when it starts and then every day, an hour later when a check fails. When a newer version exists, the status line and the update item read "Update available" with the version. The tray never installs on its own, because a restart drops loaded models and requests in flight: choose the update item to install it. The item reads "Check for Updates" before a check finds anything and "Up to date" with the version after one finds nothing; choosing either checks again and installs whatever it finds. While an update downloads, the status line shows its progress, and a failed check or update shows "Update failed" with the reason.
 
-Workshop asks as well: after its own update check it asks the local gateway it uses to update, and shows "Runvil Gateway is updating to" the new version when it does. On Windows, Workshop's update reinstalls every component, so the gateway's item there reads "Updates come from Runvil Workshop" and its own check never runs.
+Workshop asks as well, and the gateway installs at once when it does: after each of Workshop's update checks, including the automatic one a few seconds after Workshop starts, Workshop asks the local gateway it uses to update, and shows "Runvil Gateway is updating to" the new version when one installs. On Windows, Workshop's update reinstalls every component, so the gateway's item there reads "Updates come from Runvil Workshop" and its own check never runs.
 
 On macOS and Linux the gateway replaces its own app or program, starts the new version, and exits once the new one is serving; if the new one never comes up, it puts the old one back. Workshop waits through the switch. On Windows without Workshop, the gateway downloads the new setup and runs it, and the setup stops and restarts the gateway.
 
-A gateway run with `--no-tray`, including the systemd service below, never checks for updates. Update a server by rebuilding it from source.
+A gateway run with `--no-tray`, including the systemd service below, never checks for updates on its own, though it still updates when a local Workshop asks it to. Update a server by rebuilding it from source.
 
 ## Check that it is healthy
 
