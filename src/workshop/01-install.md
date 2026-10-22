@@ -40,16 +40,16 @@ Your settings, the gateway's config and keys, logs, and downloaded models live i
 
 ## Change or remove components
 
-On Windows, run the setup again; its components page starts from your previous choice. Uninstall from Settings, Apps; the uninstaller's Delete app data check box also removes the `.runvil` directory.
+On Windows, run the setup again to add components; its components page starts from your previous choice. To remove a component, uninstall Runvil from Settings, Apps, then run the setup again with only the components you want. Uninstalling keeps the `.runvil` directory unless you tick the uninstaller's Delete app data check box.
 
 On macOS and Linux, the installer refuses a folder that already holds an installation. To change components, run `maintenancetool` in the install directory to uninstall, then run the installer again with the components you want. Uninstalling removes only the install directory, so your `.runvil` directory and its downloaded models stay.
 
-To add speech later without reinstalling, add `[[stt_model]]` entries to the gateway's config, list them in the selected profile's `models`, and run the gateway's `init` command; the Gateway set's install and speech chapters cover it.
+To add speech later, add `[[stt_model]]` entries to the gateway's config, list them in the selected profile's `models`, and run the gateway's `init` command; the Gateway set's install and speech chapters cover it. Checking Speech to Text in a later install does not add them, since the installer keeps your existing config.
 
 ## Updates
 
 Workshop checks for an update a few seconds after it starts, and whenever you choose Check for Updates in the About dialog, under Help. When a new version exists, a banner offers it: choose Download Update, and Workshop downloads it, installs it, and restarts. On macOS and Linux it replaces its own app, and on Windows it runs the new setup, which updates every installed component.
 
-On macOS and Linux, after each check, whether or not Workshop itself has an update, Workshop asks the local gateway it uses to update too, and the gateway installs any newer version at once. Workshop shows a notice when the gateway starts updating. Workshop stays connected while the gateway restarts into the new version.
+On macOS and Linux, after each check, whether or not Workshop itself has an update, Workshop asks the local gateway it uses to update too, and the gateway installs any newer version at once. Workshop shows a notice once the gateway has installed the new version and is restarting into it. Workshop stays connected while the gateway restarts into the new version.
 
 A gateway installed without Workshop updates itself on request from its tray menu; the Gateway set's install chapter covers it.
