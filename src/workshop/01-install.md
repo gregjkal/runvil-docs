@@ -8,7 +8,7 @@ Download the installer for your machine from the [project README](https://github
 
 - Windows x64: `Runvil-setup.exe`.
 - macOS: `Runvil-arm64.dmg` on Apple silicon or `Runvil-x64.dmg` on Intel. Open the disk image and run `Runvil Installer`.
-- Linux: `Runvil-x64.run` on Ubuntu 22.04 or later, or `Runvil-arm64.run` on Ubuntu 24.04, Debian 13, or later. Make it executable and run it from your desktop session.
+- Linux: `Runvil-x64.run` on Ubuntu 22.04, Debian 12, or later, or `Runvil-arm64.run` on Ubuntu 24.04, Debian 13, or later. Make it executable and run it from your desktop session.
 
 The [latest release](https://github.com/cppalliance/runvil/releases/latest) holds the same installers under versioned names, with a `SHA256SUMS` file to check them against.
 

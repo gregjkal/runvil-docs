@@ -12,7 +12,7 @@ Each platform installs in its own place:
 
 - Windows: `%LOCALAPPDATA%\Runvil\runvil-gateway.exe`. A Gateway-only install's last page offers to open the Settings page in your browser. The Start menu entry belongs to Workshop, so start the gateway later by running `runvil-gateway.exe`, or turn on Launch at Login from its tray menu.
 - macOS: `Runvil Gateway.app` in `/Applications/Runvil`. The installer never asks for an administrator password; if you cannot write `/Applications`, choose a folder you can, such as `~/Applications/Runvil`.
-- Linux: `runvil-gateway` in `~/Runvil`, with a "Runvil Gateway Settings" entry in your applications menu. The x64 installer runs on Ubuntu 22.04 or later and the ARM64 installer on Ubuntu 24.04, Debian 13, or later, from a desktop session. A minimal or server system may lack libraries every desktop has, such as EGL, GLES, OpenGL, HarfBuzz, FriBidi, fontconfig, the Wayland client library, and the X11 (xcb) libraries the installer itself uses.
+- Linux: `runvil-gateway` in `~/Runvil`, with a "Runvil Gateway Settings" entry in your applications menu. The x64 installer runs on Ubuntu 22.04, Debian 12, or later, and the ARM64 installer on Ubuntu 24.04, Debian 13, or later, from a desktop session. A minimal or server system may lack libraries every desktop has, such as EGL, GLES, OpenGL, HarfBuzz, FriBidi, fontconfig, the Wayland client library, and the X11 (xcb) libraries the installer itself uses.
 
 The installers are not code-signed yet. On Windows, SmartScreen may stop the setup: choose More info, then Run anyway. On macOS the first open is refused: open System Settings, then Privacy & Security, choose Open Anyway, and open the installer again. Until the apps are signed, Launch at Login does not work on macOS.
 
